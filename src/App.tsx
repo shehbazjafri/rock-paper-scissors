@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles";
 import Typography from "./styles/Typograpgy";
 import Button from "@mui/material/Button";
+import { CHOICES } from "./utils/constants";
 
 type ChoiceDisplay = {
   isPlayer?: boolean;
@@ -11,7 +12,7 @@ type ChoiceDisplay = {
 
 const StyledContainer = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: auto 2fr 1fr;
   position: relative;
   min-height: calc(100vh - 3px);
 `;
@@ -19,6 +20,8 @@ const StyledContainer = styled.div`
 const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 `;
 
 const PlayerActionsContainer = styled.div`
@@ -63,8 +66,22 @@ const StlyedGameContainer = styled.div`
 
 const StyledResultContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 3rem;
+`;
+
+const StyledPlayButton = styled(Button)`
+  &.MuiButtonBase-root {
+    background: var(--hazyWhite);
+    color: var(--secondaryBlue);
+    font-weight: bold;
+    font-size: 1.5rem;
+    :hover {
+      background: var(--grey);
+    }
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -87,7 +104,7 @@ function App() {
   const [result, setResult] = useState<string>("");
 
   const generateComputerChoice = () => {
-    const choices = ["rock", "paper", "scissors"];
+    const choices = [CHOICES.ROCK, CHOICES.PAPER, CHOICES.SCISSORS];
     const randomIndex = Math.floor(Math.random() * choices.length);
     setComputerChoice(choices[randomIndex]);
   };
@@ -96,14 +113,14 @@ function App() {
     if (playerChoice === computerChoice) {
       return "It's a draw!";
     }
-    if (playerChoice === "rock") {
-      return computerChoice === "scissors" ? "You win!" : "You lose!";
+    if (playerChoice === CHOICES.ROCK) {
+      return computerChoice === CHOICES.SCISSORS ? "You win!" : "You lose!";
     }
-    if (playerChoice === "paper") {
-      return computerChoice === "rock" ? "You win!" : "You lose!";
+    if (playerChoice === CHOICES.PAPER) {
+      return computerChoice === CHOICES.ROCK ? "You win!" : "You lose!";
     }
-    if (playerChoice === "scissors") {
-      return computerChoice === "paper" ? "You win!" : "You lose!";
+    if (playerChoice === CHOICES.SCISSORS) {
+      return computerChoice === CHOICES.PAPER ? "You win!" : "You lose!";
     }
     return "";
   };
@@ -122,15 +139,21 @@ function App() {
 
   const displayChoice = (choice: string) => {
     switch (choice) {
-      case "rock":
+      case CHOICES.ROCK:
         return "✊";
-      case "paper":
+      case CHOICES.PAPER:
         return "🤚";
-      case "scissors":
+      case CHOICES.SCISSORS:
         return "✌️";
       default:
-        return "";
+        return "?";
     }
+  };
+
+  const resetGame = () => {
+    setPlayerChoice("");
+    setComputerChoice("");
+    setResult("");
   };
 
   return (
@@ -148,7 +171,14 @@ function App() {
               {displayChoice(playerChoice)}
             </StyledChoiceDisplay>
           </ChoiceContainer>
-          <StyledResultContainer>{result}</StyledResultContainer>
+          <StyledResultContainer>
+            <span>{result}</span>
+            {result && (
+              <StyledPlayButton onClick={resetGame}>
+                Play again
+              </StyledPlayButton>
+            )}
+          </StyledResultContainer>
           <ChoiceContainer>
             <span>Computer</span>
             <StyledChoiceDisplay>
@@ -156,17 +186,19 @@ function App() {
             </StyledChoiceDisplay>
           </ChoiceContainer>
         </StlyedGameContainer>
-        <PlayerActionsContainer>
-          <StyledButton onClick={() => handlePlayerChoice("rock")}>
-            ✊
-          </StyledButton>
-          <StyledButton onClick={() => handlePlayerChoice("paper")}>
-            🤚
-          </StyledButton>
-          <StyledButton onClick={() => handlePlayerChoice("scissors")}>
-            ✌️
-          </StyledButton>
-        </PlayerActionsContainer>
+        {!result && (
+          <PlayerActionsContainer>
+            <StyledButton onClick={() => handlePlayerChoice(CHOICES.ROCK)}>
+              ✊
+            </StyledButton>
+            <StyledButton onClick={() => handlePlayerChoice(CHOICES.PAPER)}>
+              🤚
+            </StyledButton>
+            <StyledButton onClick={() => handlePlayerChoice(CHOICES.SCISSORS)}>
+              ✌️
+            </StyledButton>
+          </PlayerActionsContainer>
+        )}
       </StyledContainer>
     </>
   );
