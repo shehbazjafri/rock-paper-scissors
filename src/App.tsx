@@ -8,6 +8,8 @@ import { CHOICES } from "./utils/constants";
 
 type ChoiceDisplay = {
   isPlayer?: boolean;
+  computerChoice?: string;
+  playerChoice?: string;
 };
 
 const StyledContainer = styled.div`
@@ -34,7 +36,6 @@ const PlayerActionsContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 15rem;
-  background: var(--secondaryBlue);
   position: absolute;
   bottom: 0;
   @media (max-width: 800px) {
@@ -65,6 +66,47 @@ const StyledChoiceDisplay = styled.div<ChoiceDisplay>`
   border-radius: 9rem;
   font-size: 7rem;
   color: var(--black);
+  ${(props) =>
+    !props.isPlayer &&
+    !props.computerChoice &&
+    props.playerChoice &&
+    "animation: shake 0.5s;"}
+  animation-iteration-count: infinite;
+  @keyframes shake {
+    0% {
+      transform: translate(1px, 1px) rotate(0deg);
+    }
+    10% {
+      transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+      transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+      transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+      transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+      transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+      transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+  }
   @media (max-width: 800px) {
     width: 10rem;
     height: 10rem;
@@ -92,8 +134,9 @@ const StyledResultContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3rem;
+  font-size: 5rem;
   @media (max-width: 490px) {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 `;
 
@@ -122,6 +165,7 @@ const StyledButton = styled(Button)`
     font-size: 5rem;
     :hover {
       background: var(--grey);
+      transform: scale(1.1);
     }
     @media (max-width: 800px) {
       width: 10rem;
@@ -165,7 +209,9 @@ function App() {
 
   const handlePlayerChoice = (choice: string) => {
     setPlayerChoice(choice);
-    generateComputerChoice();
+    setTimeout(() => {
+      generateComputerChoice();
+    }, 1500);
   };
 
   // Set result when user and player choices are set
@@ -205,7 +251,7 @@ function App() {
         <StlyedGameContainer>
           <ChoiceContainer>
             <span>Player</span>
-            <StyledChoiceDisplay isPlayer={true}>
+            <StyledChoiceDisplay isPlayer>
               {displayChoice(playerChoice)}
             </StyledChoiceDisplay>
           </ChoiceContainer>
@@ -219,12 +265,15 @@ function App() {
           </StyledResultContainer>
           <ChoiceContainer>
             <span>Computer</span>
-            <StyledChoiceDisplay>
+            <StyledChoiceDisplay
+              playerChoice={playerChoice}
+              computerChoice={computerChoice}
+            >
               {displayChoice(computerChoice)}
             </StyledChoiceDisplay>
           </ChoiceContainer>
         </StlyedGameContainer>
-        {!result && (
+        {!playerChoice && (
           <PlayerActionsContainer>
             <StyledButton onClick={() => handlePlayerChoice(CHOICES.ROCK)}>
               ✊

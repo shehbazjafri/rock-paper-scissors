@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
 
   }
   html {
-    background-color: var(--primaryBlue);
+    background: radial-gradient(var(--primaryBlue), var(--secondaryBlue));
     font-size: 10px;
   }
 
