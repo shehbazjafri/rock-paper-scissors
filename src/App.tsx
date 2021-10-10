@@ -81,6 +81,9 @@ const StlyedGameContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 5rem;
+  @media (max-width: 490px) {
+    gap: 2rem;
+  }
 `;
 
 const StyledResultContainer = styled.div`
@@ -89,6 +92,9 @@ const StyledResultContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 3rem;
+  @media (max-width: 490px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const StyledPlayButton = styled(Button)`
@@ -99,6 +105,9 @@ const StyledPlayButton = styled(Button)`
     font-size: 1.5rem;
     :hover {
       background: var(--grey);
+    }
+    @media (max-width: 490px) {
+      font-size: 1.2rem;
     }
   }
 `;
