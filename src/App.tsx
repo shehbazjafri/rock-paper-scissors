@@ -22,6 +22,9 @@ const StyledHeader = styled.header`
   justify-content: center;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  @media (max-width: 490px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const PlayerActionsContainer = styled.div`
@@ -34,6 +37,12 @@ const PlayerActionsContainer = styled.div`
   background: var(--secondaryBlue);
   position: absolute;
   bottom: 0;
+  @media (max-width: 800px) {
+    gap: 10rem;
+  }
+  @media (max-width: 490px) {
+    gap: 5rem;
+  }
 `;
 
 const ChoiceContainer = styled.div`
@@ -56,6 +65,16 @@ const StyledChoiceDisplay = styled.div<ChoiceDisplay>`
   border-radius: 9rem;
   font-size: 7rem;
   color: var(--black);
+  @media (max-width: 800px) {
+    width: 10rem;
+    height: 10rem;
+    font-size: 3rem;
+  }
+  @media (max-width: 490px) {
+    width: 8rem;
+    height: 8rem;
+    font-size: 2rem;
+  }
 `;
 
 const StlyedGameContainer = styled.div`
@@ -94,6 +113,16 @@ const StyledButton = styled(Button)`
     font-size: 5rem;
     :hover {
       background: var(--grey);
+    }
+    @media (max-width: 800px) {
+      width: 10rem;
+      height: 10rem;
+      font-size: 3rem;
+    }
+    @media (max-width: 490px) {
+      width: 8rem;
+      height: 8rem;
+      font-size: 2rem;
     }
   }
 `;
