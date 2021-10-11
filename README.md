@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Rock, Paper, Scissors
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Rock-Paper-Scissors game made with TypeScript and React.
 
 ## Available Scripts
 
